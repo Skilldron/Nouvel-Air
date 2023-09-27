@@ -34,3 +34,7 @@ La réexécution de la commande garantit que la configuration Firebase de votre 
 
 Lorsque cette commande est exécutée, vous serez invité à sélectionner le projet Firebase que vous souhaitez utiliser et les plates-formes que vous souhaitez configurer. 
 
+
+Regénérer le splash
+
+    dart run flutter_native_splash:create
