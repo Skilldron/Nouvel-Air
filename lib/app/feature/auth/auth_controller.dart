@@ -1,19 +1,39 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:nouvel_air/app/feature/auth/views/login_view.dart';
+import 'package:nouvel_air/app/feature/navigation/navigation_binding.dart';
+import 'package:nouvel_air/app/feature/navigation/views/navigation.dart';
 
-class AuthService {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+class AuthController extends GetxController {
+  static AuthController get instance => Get.find();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  late final Rxn<User?> _user;
 
-  User? get currentUser => _firebaseAuth.currentUser!;
+  @override
+  void onReady() {
+    super.onReady();
 
-  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+    _user = Rxn<User?>(auth.currentUser);
+    _user.bindStream(auth.userChanges());
+    ever(_user, _setInitialScreen);
+  }
 
-  Future<UserCredential> signInWithEmailAndPassword(
+  _setInitialScreen(User? user) {
+    if (user != null) {
+      // user is logged in
+      Get.offAll(() => const NavigationView(), binding: NavigationBinding());
+    } else {
+      // user is null as in user is not available or not logged in
+      Get.offAll(() => const LoginView());
+    }
+  }
+
+  Future<void> login(
       {required String email, required String password}) async {
     try {
-      return await _firebaseAuth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
           email: email, password: password);
+      _user.value != null ? Get.offAll(() => const NavigationView()) : Get.offAll(() => const LoginView());
     } on FirebaseAuthException catch (e) {
       switch(e.code) {
         case 'invalid-email':
@@ -30,17 +50,16 @@ class AuthService {
 
   Future<void> signOut() async {
     try {
-      await _firebaseAuth.signOut();
+      await auth.signOut();
     } catch (e) {
-      log('Error during sign out', error: e);
       rethrow;
     }
   }
 
-  Future<UserCredential> createUserWithEmailAndPassword(
+  Future<UserCredential> register(
       {required String email, required String password}) async {
     try {
-      return await _firebaseAuth.createUserWithEmailAndPassword(
+      return await auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       switch(e.code) {

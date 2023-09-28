@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:nouvel_air/app/common/components/text_field.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:flutter/material.dart';

@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nouvel_air/core/utils/colors.dart';
+import 'package:get/get.dart';
+import 'package:nouvel_air/app/feature/auth/auth_controller.dart';
+import 'package:nouvel_air/app/nouvel_air.dart';
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'fitness_book_app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ Future<void> main() async {
 Future<void> initializeDefault() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ).then((value) => Get.put(AuthController()));
 
   // Étant donné que kDebugMode est une valeur constante, le compilateur Dart sait qu'il doit supprimer complètement ce bloc de code en mode de publication.
   if (kDebugMode) {
@@ -39,18 +40,5 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(final BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "Persistent Bottom Navigation Bar example project",
-        theme: ThemeData(
-          fontFamily: 'Roboto',
-          primaryColor: primary,
-          secondaryHeaderColor:primaryTitle,
-          inputDecorationTheme: const InputDecorationTheme(
-            filled: true,
-            fillColor: Colors.white,
-          ),
-        ),
-        home: const FitnessBookApp(),
-      );
+  Widget build(final BuildContext context) => const NouvelAir();
 }

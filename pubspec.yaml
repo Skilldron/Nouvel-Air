@@ -43,6 +43,7 @@ dependencies:
   cloud_firestore_odm: 1.0.0-dev.51
   json_annotation: ^4.8.1
   flutter_launcher_icons: ^0.13.1
+  get: ^4.6.5
 
 
 dependency_overrides:

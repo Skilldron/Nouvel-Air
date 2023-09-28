@@ -1,24 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nouvel_air/app/feature/auth/auth_controller.dart';
 import 'package:nouvel_air/app/feature/auth/components/auth_form.dart';
 import 'package:nouvel_air/app/feature/auth/components/decorations.dart';
-
 import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:nouvel_air/core/utils/font_styles.dart';
 
-import 'package:flutter/material.dart';
+class RegisterView extends GetView<AuthController> {
+    const RegisterView({Key? key}) : super(key: key);
 
-import '../service/auth_service.dart';
-
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
-
-  @override
-  State<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
-  final AuthService _firebaseAuth = AuthService();
-
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primary,
@@ -40,7 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Créer un compte', style: h1Style),
-                    AuthForm(function: _firebaseAuth.createUserWithEmailAndPassword, title: 'Créer un compte'),
+                    AuthForm(function: controller.register, title: 'Créer un compte'),
                   ],
                 ),
           ),

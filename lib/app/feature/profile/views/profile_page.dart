@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-
-import '../../auth/service/auth_service.dart';
+import 'package:get/get.dart';
+import 'package:nouvel_air/app/feature/auth/auth_controller.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
-
-  final AuthService _firebaseAuth = AuthService();
-
-  Future<void> signOut() async {
-    await _firebaseAuth.signOut();
-  }
+  final AuthController _firebaseAuth = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
             child: ElevatedButton(
-      onPressed: () async => await signOut(),
+      onPressed: () async =>  _firebaseAuth.auth.signOut(),
       child: const Text('Sign Out'),
     )));
   }

@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nouvel_air/app/feature/auth/auth_controller.dart';
 import 'package:nouvel_air/app/feature/auth/components/auth_form.dart';
 import 'package:nouvel_air/app/feature/auth/components/decorations.dart';
-import 'package:nouvel_air/app/feature/auth/controller/auth_controller.dart';
-import 'package:nouvel_air/app/feature/auth/views/sign_up_page.dart';
+import 'package:nouvel_air/app/feature/auth/views/sign_up_view.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:nouvel_air/core/utils/font_styles.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final AuthController _authController = AuthController();
+class LoginView extends GetView<AuthController> {
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         const Text('Me connecter', style: h1Style),
                         AuthForm(
-                          function: _authController.login,
+                          function: controller.login,
                           title: 'Connexion',
                           child: const Padding(
                             padding: EdgeInsets.only(top: 8.0),
@@ -55,11 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                               const Text("Pas de compte ?"),
                               GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const RegisterPage()));
+                                    Get.to(const RegisterView());
                                   },
                                   child: const Padding(
                                     padding: EdgeInsets.only(left: 5),
