@@ -13,9 +13,6 @@ class NouvelAir extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Nouvel Air',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       initialRoute: '/',
       unknownRoute: GetPage(name: '/notfound', page: () => const Text('Not found')),
       getPages: routes,

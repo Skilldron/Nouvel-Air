@@ -25,7 +25,7 @@ Padding mainAuthButton(bool isLoading, function, String title) {
               )
             : Text(
                 title,
-                style: bodyBoldStyle,
+                style: bodyBoldStyle14,
               ),
       ),
     )),

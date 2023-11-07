@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:nouvel_air/app/feature/auth/views/login_view.dart';
 import 'package:nouvel_air/app/feature/navigation/navigation_binding.dart';
-import 'package:nouvel_air/app/feature/navigation/views/navigation.dart';
+import 'package:nouvel_air/app/feature/navigation/views/navigation_view.dart';
 
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
@@ -15,6 +15,11 @@ class AuthController extends GetxController {
 
     _user = Rxn<User?>(auth.currentUser);
     _user.bindStream(auth.userChanges());
+    
+    // Update the user data when loading app.
+    auth.currentUser!.reload();
+
+    // Listen to auth state changes
     ever(_user, _setInitialScreen);
   }
 

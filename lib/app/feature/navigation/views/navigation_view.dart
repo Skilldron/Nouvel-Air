@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nouvel_air/app/feature/home/views/home_view.dart';
 import 'package:nouvel_air/app/feature/navigation/navigation_controller.dart';
-import 'package:nouvel_air/app/feature/profile/views/profile_page.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 
 class NavigationView extends GetWidget<NavigationController> {
@@ -13,11 +13,11 @@ class NavigationView extends GetWidget<NavigationController> {
       return Scaffold(
         body: IndexedStack(
           index: controller.tabIndex,
-          children: [
-            ProfilePage(),
-            const Scaffold(body: Center(child: Text('Stats'))),
-            const Scaffold(body: Center(child: Text('Cagnotte'))),
-            const Scaffold(body: Center(child: Text('Soutien'))),
+          children: const [
+            HomeView(),
+            Scaffold(body: Center(child: Text('Stats'))),
+            Scaffold(body: Center(child: Text('Cagnotte'))),
+            Scaffold(body: Center(child: Text('Soutien'))),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
