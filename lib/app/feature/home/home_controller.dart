@@ -22,4 +22,10 @@ class HomeController extends GetxController {
     update();
     return RxInt(12); // TODO : get days from firebase
   }
+
+
+  addCigaret(){
+    // TODO: Increment the cigaret count in firebase for this user
+    update();
+  }
 }

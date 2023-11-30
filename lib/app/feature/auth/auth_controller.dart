@@ -17,7 +17,7 @@ class AuthController extends GetxController {
     _user.bindStream(auth.userChanges());
     
     // Update the user data when loading app.
-    auth.currentUser!.reload();
+    auth.currentUser?.reload();
 
     // Listen to auth state changes
     ever(_user, _setInitialScreen);

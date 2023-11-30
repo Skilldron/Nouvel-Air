@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
 import 'package:nouvel_air/app/common/components/text_field.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,8 @@ class AuthForm extends StatefulWidget {
   final String title;
   final Widget? child;
 
-  const AuthForm({super.key, required this.function, required this.title, this.child});
+  const AuthForm(
+      {super.key, required this.function, required this.title, this.child});
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -63,9 +63,8 @@ class _AuthFormState extends State<AuthForm> {
                   .function(
                       email: emailController.text,
                       password: passwordController.text)
-                  .then((value) => Navigator.canPop(context)
-                      ? Navigator.pop(context)
-                      : null)
+                  .then((value) =>
+                      Navigator.canPop(context) ? Navigator.pop(context) : null)
                   .onError<FirebaseAuthException>((error, stackTrace) =>
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           backgroundColor: primaryTitle,

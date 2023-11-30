@@ -4,6 +4,8 @@ import 'package:nouvel_air/app/common/components/card.dart';
 import 'package:nouvel_air/app/feature/auth/components/decorations.dart';
 import 'package:nouvel_air/app/feature/home/home_controller.dart';
 import 'package:nouvel_air/app/feature/home/views/overview_content_view.dart';
+import 'package:nouvel_air/app/feature/home/views/partner_content_view.dart';
+import 'package:nouvel_air/app/feature/profile/views/profile_page.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:nouvel_air/core/utils/font_styles.dart';
 
@@ -12,23 +14,34 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GetBuilder<HomeController>(
       init: HomeController(),
       builder: (_) {
         return Scaffold(
             body: Container(
           decoration: appBackground,
+          padding: const EdgeInsets.only(top: 16),
           child: SafeArea(
               child: SingleChildScrollView(
-                child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    "Bonjour ${_.userName} !",
-                    style: h1Style,
-                    textAlign: TextAlign.left,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Bonjour ${_.userName} !",
+                        style: h1Style,
+                        textAlign: TextAlign.left,
+                      ),
+                      GestureDetector(
+                          onTap: () => Get.to(ProfilePage()),
+                          child: const Icon(Icons.account_circle_rounded,
+                              size: 29, color: primaryText))
+                    ],
                   ),
                 ),
                 const FractionalTranslation(
@@ -53,23 +66,19 @@ class HomeView extends StatelessWidget {
                           child: const OverviewContentView())),
                 )),
                 const SizedBox(height: 48),
-                const Center(
+                Center(
                     child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
-                  child: CardComponent(
-                      title: 'Offres Partenaires',
-                      child: Column(
-                        children: [
-                          Text("Texte"),
-                          Text("Texte"),
-                          Text("Texte"),
-                          Text("Texte"),
-                        ],
-                      )),
-                ))
-                          ],
-                        ),
-              )),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: CardComponent(
+                            title: 'Offres Partenaires',
+                            child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 16),
+                                child: const PartnerContentView())))),
+                const SizedBox(height: 32),
+              ],
+            ),
+          )),
         ));
       },
     );
