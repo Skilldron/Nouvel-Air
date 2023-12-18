@@ -26,8 +26,10 @@ class PartnerContentView extends GetView<HomeController> {
         height: 30,
         alignment: Alignment.center,
         child: GestureDetector(
-          onTap: () => Get.toNamed('/cagnotte'),
+          onTap: () => Get.toNamed('/partner-offers'),
           child: Container(
+            width: 125,
+            color: Colors.transparent,
             alignment: Alignment.center,
             height: 30,
             child: const Text(

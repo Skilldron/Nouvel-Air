@@ -16,7 +16,7 @@ class PartnerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print('tapped'),
+      onTap: () => print('tapped'), // TODO: rediriger vers la bonne page
       child: Container(
         width: double.infinity,
         height: heightSize == HeigthSize.small ? 64 : 95,

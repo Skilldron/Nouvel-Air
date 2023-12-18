@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
