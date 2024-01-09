@@ -16,19 +16,8 @@ class ListOffersView extends StatelessWidget {
       init: PartnerOffersController(),
       builder: (controller) {
         return Scaffold(
-          // appBar: AppBar(
-          //   elevation: 0,
-          //   flexibleSpace: Image(
-          //     image: AssetImage("assets/images/app_bg.png"),
-          //     fit: BoxFit.cover,
-          //   ),
-          //   toolbarHeight: 50,
-          //   backgroundColor: Colors.transparent,
-          //   leading:
-          // ),
           body: Container(
             decoration: appBackground,
-            // padding: const EdgeInsets.only(top: 12),
             child: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
@@ -103,10 +92,6 @@ class ListOffersView extends StatelessWidget {
                                     labelText:
                                         'Chercher un partenaire, une offre'),
                               ),
-                              // RaisedButton(
-                              //   child: Text('Login'),
-                              //   onPressed: controller.login,
-                              // )
                             ],
                           )),
                     ),

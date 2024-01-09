@@ -15,9 +15,13 @@ class AuthController extends GetxController {
 
     _user = Rxn<User?>(auth.currentUser);
     _user.bindStream(auth.userChanges());
-    
+
     // Update the user data when loading app.
-    auth.currentUser?.reload();
+    try {
+      auth.currentUser?.reload();
+    } catch (e) {
+      auth.signOut();
+    }
 
     // Listen to auth state changes
     ever(_user, _setInitialScreen);
@@ -33,20 +37,27 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> login(
-      {required String email, required String password}) async {
+  Future<void> login({required String email, required String password}) async {
     try {
-      await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      _user.value != null ? Get.offAll(() => const NavigationView()) : Get.offAll(() => const LoginView());
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      _user.value != null
+          ? Get.offAll(() => const NavigationView())
+          : Get.offAll(() => const LoginView());
     } on FirebaseAuthException catch (e) {
-      switch(e.code) {
+      switch (e.code) {
         case 'invalid-email':
-          throw FirebaseAuthException(code: e.code, message: "L'adresse email semble être invalide. Vérifier qu'il contient bien un @");
+          throw FirebaseAuthException(
+              code: e.code,
+              message:
+                  "L'adresse email semble être invalide. Vérifier qu'il contient bien un @");
         case 'user-not-found':
-          throw FirebaseAuthException(code: e.code, message: "Aucun utilisateur ne correspond à cette adresse email.");
+          throw FirebaseAuthException(
+              code: e.code,
+              message:
+                  "Aucun utilisateur ne correspond à cette adresse email.");
         case 'wrong-password':
-          throw FirebaseAuthException(code: e.code, message: "Le mot de passe est invalide.");
+          throw FirebaseAuthException(
+              code: e.code, message: "Le mot de passe est invalide.");
         default:
           rethrow;
       }
@@ -67,13 +78,20 @@ class AuthController extends GetxController {
       return await auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      switch(e.code) {
+      switch (e.code) {
         case 'email-already-in-use':
-          throw FirebaseAuthException(code: e.code, message: "L'adresse email est déjà utilisée par un autre compte.");
+          throw FirebaseAuthException(
+              code: e.code,
+              message:
+                  "L'adresse email est déjà utilisée par un autre compte.");
         case 'invalid-email':
-          throw FirebaseAuthException(code: e.code, message: "L'adresse email semble être invalide. Vérifier qu'il contient bien un @");
+          throw FirebaseAuthException(
+              code: e.code,
+              message:
+                  "L'adresse email semble être invalide. Vérifier qu'il contient bien un @");
         case 'weak-password':
-          throw FirebaseAuthException(code: e.code, message: "Le mot de passe est trop faible.");
+          throw FirebaseAuthException(
+              code: e.code, message: "Le mot de passe est trop faible.");
         default:
           rethrow;
       }
