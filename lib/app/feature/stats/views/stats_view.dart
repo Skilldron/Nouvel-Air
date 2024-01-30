@@ -142,7 +142,7 @@ class StatsView extends StatelessWidget {
                                           padding: const EdgeInsets.all(10),
                                           child: GestureDetector(
                                               onTap: () =>
-                                                  debugPrint("je tape"),
+                                                  Get.toNamed('/stats/details'),
                                               child: const Text(
                                                 "Voir plus",
                                                 style: TextStyle(

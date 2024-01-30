@@ -8,6 +8,9 @@ import 'package:nouvel_air/app/feature/navigation/navigation_binding.dart';
 import 'package:nouvel_air/app/feature/navigation/views/navigation_view.dart';
 import 'package:nouvel_air/app/feature/partner_offers/partner_offers_binding.dart';
 import 'package:nouvel_air/app/feature/partner_offers/views/list_offers_view.dart';
+import 'package:nouvel_air/app/feature/stats/stats_binding.dart';
+import 'package:nouvel_air/app/feature/stats/views/details_stats_view.dart';
+import 'package:nouvel_air/app/feature/stats/views/stats_view.dart';
 
 final routes = [
   GetPage(
@@ -17,6 +20,12 @@ final routes = [
       page: () => const NavigationView(),
       binding: NavigationBinding()),
   GetPage(name: '/home', page: () => const HomeView(), binding: HomeBinding()),
+  GetPage(
+      name: '/stats', page: () => const StatsView(), binding: StatsBinding()),
+  GetPage(
+      name: '/stats/details',
+      page: () => const DetailsStatsView(),
+      binding: StatsBinding()),
   GetPage(
       name: '/cagnotte',
       page: () => const Scaffold(body: Center(child: Text('Cagnotte'))),
