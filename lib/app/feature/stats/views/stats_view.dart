@@ -5,7 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:nouvel_air/app/common/components/card.dart';
 import 'package:nouvel_air/app/feature/auth/components/decorations.dart';
-import 'package:nouvel_air/app/feature/home/views/data_index_view.dart';
+import 'package:nouvel_air/app/common/components/data_index_view.dart';
+import 'package:nouvel_air/app/feature/stats/components/trophee_card.dart';
 import 'package:nouvel_air/app/feature/stats/stats_controller.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:nouvel_air/core/utils/font_styles.dart';
@@ -109,11 +110,53 @@ class StatsView extends StatelessWidget {
                             child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: CardComponent(
-                              title: 'Trophées',
-                              child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 16, horizontal: 8),
-                                  child: const Text("SUUUUUUUUUU"))),
+                            title: 'Trophées',
+                            child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 16, horizontal: 8),
+                                child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          width: double.infinity,
+                                          child: Wrap(
+                                            spacing: 8,
+                                            runSpacing: 8,
+                                            children: [
+                                              TropheeCardView(
+                                                title: "Investisseur",
+                                                imageURI:
+                                                    'assets/images/trophe1.png',
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          child: GestureDetector(
+                                              onTap: () =>
+                                                  debugPrint("je tape"),
+                                              child: const Text(
+                                                "Voir plus",
+                                                style: TextStyle(
+                                                  color: linkColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  fontSize: 16,
+                                                ),
+                                              )),
+                                        ),
+                                      ],
+                                    ))),
+                          ),
                         )),
                         const SizedBox(height: 48),
                         Center(

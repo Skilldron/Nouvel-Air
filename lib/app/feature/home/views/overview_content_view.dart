@@ -2,7 +2,7 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nouvel_air/app/feature/home/home_controller.dart';
-import 'package:nouvel_air/app/feature/home/views/data_index_view.dart';
+import 'package:nouvel_air/app/common/components/data_index_view.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:nouvel_air/core/utils/font_styles.dart';
 
@@ -92,12 +92,16 @@ class OverviewContentView extends GetView<HomeController> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4), side: const BorderSide(color: linkColor)),
+                        borderRadius: BorderRadius.circular(4),
+                        side: const BorderSide(color: linkColor)),
                     maximumSize: Size.infinite,
                     backgroundColor: Colors.white,
                   ),
                   onPressed: () => Get.toNamed('/cagnotte'),
-                  child: const Text("Utiliser la cagnotte", style: TextStyle(color: linkColor),)),
+                  child: const Text(
+                    "Utiliser la cagnotte",
+                    style: TextStyle(color: linkColor),
+                  )),
             ),
           ),
         ],
