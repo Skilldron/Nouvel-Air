@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC6kJn8Eel418L8Nl-iG-o-Hbss4n9CVj0',
-    appId: '1:249181757153:android:bdc9a1bb94d2f4846ca1a0',
+    appId: '1:249181757153:android:45c84ccd3e6527da6ca1a0',
     messagingSenderId: '249181757153',
     projectId: 'nouvel-air-bb938',
     storageBucket: 'nouvel-air-bb938.appspot.com',
@@ -59,11 +59,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC47XQBJYQ5_A0FrCuiy2HoktfGmTwdpCc',
-    appId: '1:249181757153:ios:766a3373a76af39a6ca1a0',
+    appId: '1:249181757153:ios:49dbd52972e18b636ca1a0',
     messagingSenderId: '249181757153',
     projectId: 'nouvel-air-bb938',
     storageBucket: 'nouvel-air-bb938.appspot.com',
     androidClientId: '249181757153-k121d57r7vrjpmf0golm1i59jh1tvtop.apps.googleusercontent.com',
-    iosBundleId: 'com.example.nouvelAir',
+    iosClientId: '249181757153-0sff5cvm3v2941ojvebtf3qu4spugug7.apps.googleusercontent.com',
+    iosBundleId: 'com.mycompany.nouvelair',
   );
 }

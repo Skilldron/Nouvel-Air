@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:249181757153:android:bdc9a1bb94d2f4846ca1a0",
+        "mobilesdk_app_id": "1:249181757153:android:45c84ccd3e6527da6ca1a0",
         "android_client_info": {
-          "package_name": "com.example.nouvel_air"
+          "package_name": "com.mycompany.nouvel_air"
         }
       },
       "oauth_client": [
