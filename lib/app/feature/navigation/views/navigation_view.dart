@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nouvel_air/app/feature/home/views/home_view.dart';
 import 'package:nouvel_air/app/feature/navigation/navigation_controller.dart';
+import 'package:nouvel_air/app/feature/pool/views/pool_view.dart';
 import 'package:nouvel_air/app/feature/stats/views/stats_view.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 
@@ -17,7 +18,7 @@ class NavigationView extends GetWidget<NavigationController> {
           children: const [
             HomeView(),
             StatsView(),
-            Scaffold(body: Center(child: Text('Cagnotte'))),
+            PoolView(),
             Scaffold(body: Center(child: Text('Soutien'))),
           ],
         ),

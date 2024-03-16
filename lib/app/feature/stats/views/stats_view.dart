@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:nouvel_air/app/common/components/card.dart';
 import 'package:nouvel_air/app/feature/auth/components/decorations.dart';

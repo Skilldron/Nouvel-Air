@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nouvel_air/app/common/components/card.dart';
 import 'package:nouvel_air/app/feature/partner_offers/partner_offers_controller.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 

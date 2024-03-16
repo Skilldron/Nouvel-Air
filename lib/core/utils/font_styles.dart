@@ -13,7 +13,6 @@ const h2Style = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-
 const h3Style = TextStyle(
   fontSize: 20,
   color: primaryText,
@@ -25,7 +24,7 @@ const h3Style = TextStyle(
 
 const bodyBoldStyle16 = TextStyle(
     fontSize: 16, height: 1.2, color: primaryText, fontWeight: FontWeight.bold);
-    
+
 const bodyBoldStyle14 = TextStyle(
     fontSize: 14,
     height: 1.2,
@@ -36,7 +35,5 @@ const bodyBoldStyle14 = TextStyle(
 const bodyRegularStyle16 =
     TextStyle(fontSize: 16, height: 1.2, fontWeight: FontWeight.normal);
 
-const bodyRegularStyle14 = TextStyle(
-    fontSize: 14,
-    height: 1.16,
-    fontWeight: FontWeight.normal);
+const bodyRegularStyle14 =
+    TextStyle(fontSize: 14, height: 1.16, fontWeight: FontWeight.normal);
