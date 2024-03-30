@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nouvel_air/app/feature/pool/pool_controller.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
@@ -57,9 +56,12 @@ class CreditPoolFormView extends StatelessWidget {
                       maximumSize: Size.infinite,
                       backgroundColor: linkColor,
                     ),
-                    onPressed: () =>
-                        controller.credit(int.parse(amountController.text)),
-                    child: const Text("Cagnotter")),
+                    onPressed: () async {
+                      await controller.credit(int.parse(amountController.text));
+                      Get.back();
+                    },
+                    child: const Text("Cagnotter",
+                        style: TextStyle(color: Colors.white))),
               ),
             ),
           ],

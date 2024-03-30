@@ -81,8 +81,11 @@ class OverviewContentView extends GetView<HomeController> {
                     maximumSize: Size.infinite,
                     backgroundColor: linkColor,
                   ),
-                  onPressed: () => controller.addCigaret(),
-                  child: const Text("Cagnotter une cigarette")),
+                  onPressed: () => Get.toNamed('/cagnotte/add'),
+                  child: const Text(
+                    "Cagnotter une cigarette",
+                    style: TextStyle(color: Colors.white),
+                  )),
             ),
           ),
           Container(

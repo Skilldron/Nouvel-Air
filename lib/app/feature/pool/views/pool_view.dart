@@ -14,7 +14,7 @@ class PoolView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PoolController>(
-        init: PoolController(),
+        init: PoolController.instance,
         builder: (controller) {
           return Scaffold(
             body: Container(
@@ -53,14 +53,15 @@ class PoolView extends StatelessWidget {
                         title: 'Mes économies',
                         child: Column(
                           children: [
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16),
                                     child: Text(
-                                      '22,57',
-                                      style: TextStyle(
+                                      controller.pool.toString(),
+                                      style: const TextStyle(
                                         color: primaryText,
                                         fontSize: 40,
                                         fontFamily: 'Roboto Condensed',
@@ -68,7 +69,7 @@ class PoolView extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     )),
-                                Text(
+                                const Text(
                                   '€',
                                   style: TextStyle(
                                     color: primaryText,
@@ -105,17 +106,18 @@ class PoolView extends StatelessWidget {
                                 constraints: const BoxConstraints(
                                     minWidth: double.infinity),
                                 child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      maximumSize: Size.infinite,
-                                      backgroundColor: linkColor,
-                                    ),
-                                    onPressed: () =>
-                                        Get.toNamed('/cagnotte/add'),
-                                    child:
-                                        const Text("Cagnotter une cigarette")),
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4)),
+                                    maximumSize: Size.infinite,
+                                    backgroundColor: linkColor,
+                                  ),
+                                  onPressed: () => Get.toNamed('/cagnotte/add'),
+                                  child: const Text(
+                                    "Cagnotter une cigarette",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
                             Container(

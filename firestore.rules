@@ -10,7 +10,7 @@ service cloud.firestore {
 
     match /{document=**} {
       allow read, write: if
-          request.time < timestamp.date(2023, 6, 1);
+          request.time < timestamp.date(2025, 6, 1);
     }
   }
 }

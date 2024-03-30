@@ -1,7 +1,13 @@
 // Create PoolController
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:nouvel_air/app/feature/auth/auth_controller.dart';
 
 class PoolController extends GetxController {
+  static PoolController instance = Get.put(PoolController());
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  User user = AuthController.instance.user!;
   final _pool = 0.obs;
   int get pool => _pool.value;
   // History field which is a list of object with amount and date
@@ -11,22 +17,80 @@ class PoolController extends GetxController {
   void onInit() {
     super.onInit();
 
-    history.value = [
-      {'amount': 100, 'date': DateTime.now()},
-      {'amount': 200, 'date': DateTime.now()},
-      {'amount': 300, 'date': DateTime.now()},
-      {'amount': 400, 'date': DateTime.now()},
-      {'amount': 500, 'date': DateTime.now()},
-    ];
+    fetchPool();
+
+    fetchHistory();
   }
 
   //loading field
   final isLoading = false.obs; // TODO: Implement loading state
 
-  void credit(int amount) {
-    _pool.value += amount;
-    history.add({'amount': amount, 'date': DateTime.now()});
+  // Function to get the pool of the current user
+  Future<void> fetchPool() async {
+    var poolDoc = firestore.collection('pool').doc(user.uid);
+
+    try {
+      var poolData = await poolDoc.get();
+      if (poolData.exists) {
+        _pool.value = poolData.data()!['pool'];
+      }
+    } catch (e) {
+      rethrow;
+    }
+
     update();
+  }
+
+  // Function to get History sorted by ascending date
+  Future<void> fetchHistory() async {
+    var historyDoc = firestore
+        .collection('pool')
+        .doc(user.uid)
+        .collection('history')
+        .orderBy("date");
+
+    try {
+      var historyData = await historyDoc.get();
+
+      history.value = historyData.docs.map((e) {
+        return {
+          'amount': e.data()['amount'],
+          'date': e.data()['date'].toDate()
+        };
+      }).toList();
+    } catch (e) {
+      rethrow;
+    }
+
+    update();
+  }
+
+  // Function to credit the pool
+  Future<void> credit(int amount) async {
+    var poolDoc = firestore.collection('pool').doc(user.uid);
+
+    try {
+      if (!(await poolDoc.get()).exists) {
+        await poolDoc.set({'pool': amount});
+      } else {
+        poolDoc.update({'pool': FieldValue.increment(amount)});
+      }
+
+      _pool.value += amount;
+    } catch (e) {
+      rethrow;
+    }
+
+    await addHistory(amount);
+    await fetchHistory();
+    update();
+  }
+
+  // Function to add history
+  Future<void> addHistory(int amount) async {
+    var historyDoc =
+        firestore.collection('pool').doc(user.uid).collection('history').doc();
+    await historyDoc.set({'amount': amount, 'date': DateTime.now()});
   }
 
   void debit(int amount) {

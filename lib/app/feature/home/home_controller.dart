@@ -14,18 +14,11 @@ class HomeController extends GetxController {
     days = await getDays();
   }
 
-
   Future<RxInt> getDays() async {
     isLoading.value = true;
     await Future.delayed(const Duration(seconds: 1));
     isLoading.value = false;
     update();
     return RxInt(12); // TODO : get days from firebase
-  }
-
-
-  addCigaret(){
-    // TODO: Increment the cigaret count in firebase for this user
-    update();
   }
 }

@@ -17,10 +17,10 @@ import 'package:nouvel_air/app/feature/stats/views/stats_view.dart';
 final routes = [
   GetPage(
       name: '/login', page: () => const LoginView(), binding: AuthBinding()),
-  GetPage(
-      name: '/',
-      page: () => const NavigationView(),
-      binding: NavigationBinding()),
+  // GetPage(
+  //     name: '/',
+  //     page: () => const NavigationView(),
+  //     binding: NavigationBinding()),
   GetPage(name: '/home', page: () => const HomeView(), binding: HomeBinding()),
   GetPage(
       name: '/stats', page: () => const StatsView(), binding: StatsBinding()),

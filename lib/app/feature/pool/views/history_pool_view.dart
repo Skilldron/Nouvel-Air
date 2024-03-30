@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -9,15 +11,22 @@ class HistoryPoolView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PoolController>(builder: (controller) {
+      // If there is no history, display a message
+      if (controller.history.isEmpty) {
+        return const Center(
+          child: Text("Aucun historique"),
+        );
+      }
+
       return Column(
         children: [
-          // For each history item, display the amount and the date
-          for (var item in controller.history)
-            ListTile(
+          ...controller.history.map((item) {
+            return ListTile(
               title: Text(item['amount'].toString()),
               subtitle:
-                  Text(DateFormat('dd/MM/yyyy h:mm').format(item['date'])),
-            ),
+                  Text(DateFormat('dd/MM/yyyy h:mm').format(item["date"])),
+            );
+          }).toList(),
         ],
       );
     });

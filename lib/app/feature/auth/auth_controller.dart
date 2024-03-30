@@ -8,6 +8,7 @@ class AuthController extends GetxController {
   static AuthController get instance => Get.find();
   FirebaseAuth auth = FirebaseAuth.instance;
   late final Rxn<User?> _user;
+  User? get user => _user.value;
 
   @override
   void onReady() {
@@ -41,7 +42,8 @@ class AuthController extends GetxController {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       _user.value != null
-          ? Get.offAll(() => const NavigationView())
+          ? Get.offAll(() => const NavigationView(),
+              binding: NavigationBinding())
           : Get.offAll(() => const LoginView());
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
