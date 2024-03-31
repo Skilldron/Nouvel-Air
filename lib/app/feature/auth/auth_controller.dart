@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:nouvel_air/app/feature/auth/auth_binding.dart';
 import 'package:nouvel_air/app/feature/auth/views/login_view.dart';
 import 'package:nouvel_air/app/feature/navigation/navigation_binding.dart';
 import 'package:nouvel_air/app/feature/navigation/views/navigation_view.dart';
@@ -11,7 +12,7 @@ class AuthController extends GetxController {
   User? get user => _user.value;
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
 
     _user = Rxn<User?>(auth.currentUser);
@@ -19,13 +20,16 @@ class AuthController extends GetxController {
 
     // Update the user data when loading app.
     try {
-      auth.currentUser?.reload();
+      await auth.currentUser?.reload();
     } catch (e) {
       auth.signOut();
     }
 
     // Listen to auth state changes
     ever(_user, _setInitialScreen);
+
+    // If the currentUser is already null, we have to manually trigger the the initial screen function
+    if (auth.currentUser == null) _setInitialScreen(_user.value);
   }
 
   _setInitialScreen(User? user) {
@@ -34,7 +38,7 @@ class AuthController extends GetxController {
       Get.offAll(() => const NavigationView(), binding: NavigationBinding());
     } else {
       // user is null as in user is not available or not logged in
-      Get.offAll(() => const LoginView());
+      Get.offAll(() => const LoginView(), binding: AuthBinding());
     }
   }
 

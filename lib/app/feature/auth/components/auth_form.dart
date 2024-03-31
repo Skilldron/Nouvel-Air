@@ -32,17 +32,18 @@ class _AuthFormState extends State<AuthForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: styledTextField(
-                  controller: emailController,
-                  label: 'Email',
-                  isPassword: false,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Veuillez entrer votre email';
-                    }
-                    return null;
-                  })),
+            padding: const EdgeInsets.only(top: 20),
+            child: styledTextField(
+                controller: emailController,
+                label: 'Email',
+                isPassword: false,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez entrer votre email';
+                  }
+                  return null;
+                }),
+          ),
           Padding(
               padding: const EdgeInsets.only(top: 20),
               child: styledTextField(
@@ -54,7 +55,8 @@ class _AuthFormState extends State<AuthForm> {
                       return 'Veuillez entrer votre mot de passe';
                     }
                     return null;
-                  })),
+                  },
+                  textInputAction: TextInputAction.done)),
           widget.child ?? const SizedBox(),
           mainAuthButton(_isLoading, () async {
             if (_formKey.currentState!.validate()) {
