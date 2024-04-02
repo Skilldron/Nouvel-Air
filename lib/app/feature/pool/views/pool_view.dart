@@ -7,6 +7,7 @@ import 'package:nouvel_air/app/feature/pool/pool_controller.dart';
 import 'package:nouvel_air/app/feature/pool/views/history_pool_view.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:nouvel_air/core/utils/font_styles.dart';
+import 'package:nouvel_air/core/utils/functions.dart';
 
 class PoolView extends StatelessWidget {
   const PoolView({super.key});
@@ -60,7 +61,7 @@ class PoolView extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 16),
                                     child: Text(
-                                      controller.pool.toString(),
+                                      currencyFormat.format(controller.pool),
                                       style: const TextStyle(
                                         color: primaryText,
                                         fontSize: 40,
@@ -69,16 +70,6 @@ class PoolView extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     )),
-                                const Text(
-                                  '€',
-                                  style: TextStyle(
-                                    color: primaryText,
-                                    fontSize: 40,
-                                    fontFamily: 'Roboto Condensed',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
                               ],
                             ),
                             const Text("disponibles", style: bodyBoldStyle16),
@@ -147,9 +138,7 @@ class PoolView extends StatelessWidget {
                           ],
                         ),
                       ),
-
                       const SizedBox(height: 40),
-
                       // History
                       const CardComponent(
                         title: 'Historique',

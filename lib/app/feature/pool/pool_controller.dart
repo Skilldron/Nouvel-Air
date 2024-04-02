@@ -8,8 +8,8 @@ class PoolController extends GetxController {
   static PoolController instance = Get.put(PoolController());
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   User user = AuthController.instance.user!;
-  final _pool = 0.obs;
-  int get pool => _pool.value;
+  final _pool = 0.0.obs;
+  double get pool => _pool.value;
   // History field which is a list of object with amount and date
   var history = <Map<String, dynamic>>[].obs;
 
@@ -23,7 +23,7 @@ class PoolController extends GetxController {
   }
 
   //loading field
-  final isLoading = false.obs; // TODO: Implement loading state
+  final isLoading = false.obs;
 
   // Function to get the pool of the current user
   Future<void> fetchPool() async {
@@ -55,7 +55,8 @@ class PoolController extends GetxController {
       history.value = historyData.docs.map((e) {
         return {
           'amount': e.data()['amount'],
-          'date': e.data()['date'].toDate()
+          'date': e.data()['date'].toDate(),
+          'type': e.data()['type'] == 'credit' ? "+" : "-"
         };
       }).toList();
     } catch (e) {
@@ -66,7 +67,7 @@ class PoolController extends GetxController {
   }
 
   // Function to credit the pool
-  Future<void> credit(int amount) async {
+  Future<void> credit(double amount) async {
     var poolDoc = firestore.collection('pool').doc(user.uid);
 
     try {
@@ -87,10 +88,11 @@ class PoolController extends GetxController {
   }
 
   // Function to add history
-  Future<void> addHistory(int amount) async {
+  Future<void> addHistory(double amount) async {
     var historyDoc =
         firestore.collection('pool').doc(user.uid).collection('history').doc();
-    await historyDoc.set({'amount': amount, 'date': DateTime.now()});
+    await historyDoc
+        .set({'amount': amount, 'date': DateTime.now(), 'type': 'credit'});
   }
 
   void debit(int amount) {

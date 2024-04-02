@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:nouvel_air/app/feature/auth/auth_binding.dart';
@@ -81,8 +82,12 @@ class AuthController extends GetxController {
   Future<UserCredential> register(
       {required String email, required String password}) async {
     try {
-      return await auth.createUserWithEmailAndPassword(
+      var user = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
+
+      await createUserInDatabase(email: email, uid: user.user!.uid);
+
+      return user;
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'email-already-in-use':
@@ -101,6 +106,20 @@ class AuthController extends GetxController {
         default:
           rethrow;
       }
+    }
+  }
+
+  // Function create user in the database in doc users
+  Future<void> createUserInDatabase(
+      {required String email, required String uid}) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'email': email,
+        'uid': uid,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      rethrow;
     }
   }
 }

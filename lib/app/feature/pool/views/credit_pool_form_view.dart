@@ -30,7 +30,8 @@ class CreditPoolFormView extends StatelessWidget {
             TextFormField(
               // autofocus: true,
               controller: amountController,
-              keyboardType: TextInputType.number,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
@@ -57,7 +58,8 @@ class CreditPoolFormView extends StatelessWidget {
                       backgroundColor: linkColor,
                     ),
                     onPressed: () async {
-                      await controller.credit(int.parse(amountController.text));
+                      var value = amountController.text.replaceAll(',', '.');
+                      await controller.credit(double.parse(value));
                       Get.back();
                     },
                     child: const Text("Cagnotter",
