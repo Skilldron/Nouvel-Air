@@ -21,6 +21,8 @@ class OffersSection extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Card(
                     shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                          color: primaryTitle, width: 1, strokeAlign: 1),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: Column(
@@ -36,15 +38,15 @@ class OffersSection extends StatelessWidget {
                                 topRight: Radius.circular(8.0)),
                           ),
                           child: Image.network(
-                            "https://picsum.photos/1800/300",
+                            controller.offers[index]["imageURI"],
                             fit: BoxFit.cover,
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("DECATHLON",
-                              style: TextStyle(
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(controller.offers[index]["title"],
+                              style: const TextStyle(
                                   color: primaryText,
                                   fontSize: 16,
                                   height: 1.2,
@@ -57,12 +59,22 @@ class OffersSection extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Frais de livraison offerts",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  )),
+                              ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxWidth: 150,
+                                ),
+                                child: Text(
+                                    controller.offers[index]
+                                        ["offerDescription"],
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    )),
+                              ),
                               Container(
-                                  color: linkColor,
+                                  decoration: BoxDecoration(
+                                    color: linkColor,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
                                   child: const Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 10.5, vertical: 8.0),

@@ -5,23 +5,26 @@ import 'package:nouvel_air/app/feature/home/home_controller.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 
 class PartnerContentView extends GetView<HomeController> {
-  const PartnerContentView({Key? key}) : super(key: key);
+  final RxList<dynamic> offers;
+  // init the view with offer arguement
+  const PartnerContentView({Key? key, required this.offers}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Wrap(runSpacing: 32, children: [
-      const PartnerCard(
+      if (offers.isNotEmpty)
+        PartnerCard(
           heightSize: HeigthSize.small,
-          title: 'Decathlon',
-          imageURI: "https://picsum.photos/1800/300"),
-      const PartnerCard(
+          title: offers[0]["title"],
+          imageURI: offers[0]["imageURI"],
+        ),
+      ...offers.skip(1).toList().map((offer) {
+        return PartnerCard(
           heightSize: HeigthSize.medium,
-          title: 'Decathlon',
-          imageURI: "https://picsum.photos/1800/300"),
-      const PartnerCard(
-          heightSize: HeigthSize.medium,
-          title: 'Decathlon',
-          imageURI: "https://picsum.photos/1800/300"),
+          title: offer["title"],
+          imageURI: offer["imageURI"],
+        );
+      }).toList(),
       Container(
         height: 30,
         alignment: Alignment.center,

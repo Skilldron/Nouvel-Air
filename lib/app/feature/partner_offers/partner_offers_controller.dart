@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -15,7 +17,6 @@ class PartnerOffersController extends GetxController {
   late RxList<dynamic> offers = [].obs;
 
   // OffersFetched is an array of offers
-
   late RxList<dynamic> offersFetched = [].obs;
 
   @override
@@ -35,50 +36,11 @@ class PartnerOffersController extends GetxController {
   Future<void> fetchOffers() async {
     try {
       isLoading.value = true;
-      // final response = await http.get(Uri.parse(
-      //     'https://nouvel-air-api.herokuapp.com/api/v1/partner_offers'));
-      // if (response.statusCode == 200) {
-      //   final data = jsonDecode(response.body);
-      //   offers.value = data['data'];
-      // }
-      offersFetched.addAll([
-        {
-          "title": "Offre 1",
-          "imageURI": "https://picsum.photos/200/300",
-          "categorie": ["Categorie 1", "Categorie 2"],
-          "OfferDescription": "Description de l'offre 1"
-        },
-        {
-          "title": "Offre 2",
-          "imageURI": "https://picsum.photos/200/300",
-          "categorie": ["Categorie 1", "Categorie 2"],
-          "OfferDescription": "Description de l'offre 2"
-        },
-        {
-          "title": "Offre 3",
-          "imageURI": "https://picsum.photos/200/300",
-          "categorie": ["Categorie 1", "Categorie 2"],
-          "OfferDescription": "Description de l'offre 3"
-        },
-        {
-          "title": "Offre 4",
-          "imageURI": "https://picsum.photos/200/300",
-          "categorie": ["Categorie 1", "Categorie 2"],
-          "OfferDescription": "Description de l'offre 4"
-        },
-        {
-          "title": "Offre 5",
-          "imageURI": "https://picsum.photos/200/300",
-          "categorie": ["Categorie 1", "Categorie 2"],
-          "OfferDescription": "Description de l'offre 5"
-        },
-        {
-          "title": "Offre 6",
-          "imageURI": "https://picsum.photos/200/300",
-          "categorie": ["Categorie 1", "Categorie 2"],
-          "OfferDescription": "Description de l'offre 6"
-        },
-      ]);
+      offersFetched.value = await FirebaseFirestore.instance
+          .collection('Offers')
+          .limit(3)
+          .get()
+          .then((value) => value.docs);
 
       offers.addAll(offersFetched);
     } catch (e) {

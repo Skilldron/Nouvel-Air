@@ -67,13 +67,18 @@ class HomeView extends StatelessWidget {
                 const SizedBox(height: 48),
                 Center(
                     child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: CardComponent(
-                            title: 'Offres Partenaires',
-                            child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 16),
-                                child: const PartnerContentView())))),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: CardComponent(
+                    title: 'Offres Partenaires',
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
+                      child: PartnerContentView(
+                        offers: _.offers,
+                      ),
+                    ),
+                  ),
+                )),
                 const SizedBox(height: 32),
               ],
             ),

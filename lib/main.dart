@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:nouvel_air/app/feature/auth/auth_controller.dart';
 import 'package:nouvel_air/app/nouvel_air.dart';
@@ -29,6 +30,7 @@ Future<void> initializeDefault() async {
     try {
       FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
       await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+      FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
     } catch (e) {
       // ignore: avoid_print
       print(e);

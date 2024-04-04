@@ -24,7 +24,7 @@ class PartnerCard extends StatelessWidget {
         decoration: ShapeDecoration(
           image: DecorationImage(
             image: NetworkImage(imageURI),
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           ),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           shadows: const [
