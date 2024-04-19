@@ -7,22 +7,26 @@ import 'package:nouvel_air/app/feature/pool/pool_controller.dart';
 
 class PartnerOfferDetailController extends GetxController {
   final arguments = Get.arguments;
-  Map<String, dynamic>? offer = {
+  Map<String, dynamic> offer = {
     "title": "",
     "description": "",
     "imageURI": null,
     "offerDescription": "",
-    "price": 0,
-    "offerSubdescription": ""
+    "price": 0.0,
+    "offerSubdescription": "",
+    "code": ""
   };
   final pool = 0.0.obs;
   final PoolController poolController = Get.find<PoolController>();
+  bool isPurchasingOffer = false;
+  bool isOfferPurchased = false;
 
   @override
   void onInit() async {
     super.onInit();
     await getOfferDetail();
     pool.value = poolController.pool;
+    await isOfferAlreadyPurchased();
     update();
   }
 
@@ -46,18 +50,38 @@ class PartnerOfferDetailController extends GetxController {
     }
   }
 
-  FutureOr<double> fetchPool() async {
-    var poolDoc = FirebaseFirestore.instance.collection('pool').doc('user.uid');
+  void toggleIsPurchasingOffer() {
+    isPurchasingOffer = !isPurchasingOffer;
+    pool.value = pool.value - offer['price'];
+    update();
+  }
 
-    try {
-      var poolData = await poolDoc.get();
-      if (poolData.exists) {
-        return poolData.data()!['pool'];
-      }
-    } catch (e) {
-      rethrow;
+  Future<void> confirmPurchase() async {
+    var user = FirebaseFirestore.instance
+        .collection('users')
+        .doc(poolController.user.uid);
+
+    if ((await user.get()).exists) {
+      await user.collection('offers').add(offer);
     }
 
-    return 0.0;
+    poolController.debit(offer['price'].toDouble(), "debit");
+
+    isOfferPurchased = true;
+    update();
+  }
+
+  isOfferAlreadyPurchased() async {
+    var user = FirebaseFirestore.instance
+        .collection('users')
+        .doc(poolController.user.uid);
+
+    var offers = await user.collection('offers').get();
+
+    if (offers.docs.isNotEmpty) {
+      isOfferPurchased =
+          offers.docs.any((element) => element.data()['uuid'] == offer['uuid']);
+    }
+    update();
   }
 }

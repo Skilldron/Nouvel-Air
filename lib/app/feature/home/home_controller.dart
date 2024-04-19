@@ -45,5 +45,6 @@ class HomeController extends GetxController {
         .limit(3)
         .get()
         .then((value) => value.docs);
+    update();
   }
 }

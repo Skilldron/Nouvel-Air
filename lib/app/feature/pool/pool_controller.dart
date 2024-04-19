@@ -82,22 +82,35 @@ class PoolController extends GetxController {
       rethrow;
     }
 
-    await addHistory(amount);
+    await addHistory(amount, 'credit');
     await fetchHistory();
     update();
   }
 
   // Function to add history
-  Future<void> addHistory(double amount) async {
+  Future<void> addHistory(double amount, String typeTransaction) async {
     var historyDoc =
         firestore.collection('pool').doc(user.uid).collection('history').doc();
-    await historyDoc
-        .set({'amount': amount, 'date': DateTime.now(), 'type': 'credit'});
+    await historyDoc.set(
+        {'amount': amount, 'date': DateTime.now(), 'type': typeTransaction});
   }
 
-  void debit(int amount) {
-    _pool.value -= amount;
-    history.add({'amount': -amount, 'date': DateTime.now()});
+  void debit(double amount, String typeTransaction) async {
+    var poolDoc = firestore.collection('pool').doc(user.uid);
+
+    try {
+      if (!(await poolDoc.get()).exists) {
+        await poolDoc.set({'pool': -amount});
+      } else {
+        poolDoc.update({'pool': FieldValue.increment(-amount)});
+      }
+
+      _pool.value -= amount;
+    } catch (e) {
+      rethrow;
+    }
+    await fetchHistory();
+    await addHistory(amount, typeTransaction);
     update();
   }
 

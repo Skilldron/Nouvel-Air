@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:nouvel_air/app/common/components/card.dart';
 import 'package:nouvel_air/app/feature/auth/components/decorations.dart';
@@ -48,151 +51,178 @@ class PartnerView extends StatelessWidget {
                         ),
                         const SizedBox(height: 40),
                         CardComponent(
-                            title: "Consulter l'offre",
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Card(
-                                    shape: RoundedRectangleBorder(
-                                      side: const BorderSide(
-                                          color: primaryTitle,
-                                          width: 1,
-                                          strokeAlign: 1),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: double.infinity,
-                                          height: 60,
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(8.0),
-                                                topRight: Radius.circular(8.0)),
-                                          ),
-                                          child: controller
-                                                      .offer?["imageURI"] !=
-                                                  null
-                                              ? Image.network(
-                                                  controller.offer?["imageURI"],
-                                                  fit: BoxFit.cover,
-                                                )
-                                              : Container(),
+                          title: "Consulter l'offre",
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                        color: primaryTitle,
+                                        width: 1,
+                                        strokeAlign: 1),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 60,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(8.0),
+                                              topRight: Radius.circular(8.0)),
                                         ),
-                                        const SizedBox(height: 16),
-                                        Center(
-                                          child: Text(
-                                              controller.offer?["title"]
-                                                  .toUpperCase(),
-                                              style: const TextStyle(
-                                                  color: primaryText,
-                                                  fontSize: 16,
-                                                  height: 1.2,
-                                                  fontWeight: FontWeight.bold)),
+                                        child: controller.offer["imageURI"] !=
+                                                null
+                                            ? Image.network(
+                                                controller.offer["imageURI"],
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Container(),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Center(
+                                        child: Text(
+                                          controller.offer["title"]
+                                              .toUpperCase(),
+                                          style: const TextStyle(
+                                              color: primaryText,
+                                              fontSize: 16,
+                                              height: 1.2,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        const SizedBox(height: 16),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Text(
+                                            controller
+                                                .offer["offerDescription"],
+                                            style: const TextStyle(
+                                                color: primaryText,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                      if (controller
+                                              .offer["offerSubdescription"] !=
+                                          "")
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 8.0),
+                                              horizontal: 8.0, vertical: 8.0),
                                           child: Text(
                                               controller
-                                                  .offer!["offerDescription"],
+                                                  .offer["offerSubdescription"],
                                               style: const TextStyle(
+                                                color: primaryText,
+                                                fontSize: 14,
+                                              )),
+                                        ),
+                                      const SizedBox(height: 16),
+                                      Container(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            RichText(
+                                              textAlign: TextAlign.center,
+                                              text: TextSpan(
+                                                style: const TextStyle(
+                                                  height: 1.8,
                                                   color: primaryText,
                                                   fontSize: 14,
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        controller.offer![
-                                                    "offerSubdescription"] !=
-                                                ""
-                                            ? Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8.0,
-                                                        vertical: 8.0),
-                                                child: Text(
-                                                    controller.offer![
-                                                        "offerSubdescription"],
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: controller
+                                                              .isPurchasingOffer
+                                                          ? 'Argent utilisé\n'
+                                                          : 'Argent disponible\n'),
+                                                  TextSpan(
+                                                    text: currencyDigitFormat
+                                                        .format(controller
+                                                            .offer["price"]),
                                                     style: const TextStyle(
                                                       color: primaryText,
-                                                      fontSize: 14,
-                                                    )),
-                                              )
-                                            : const SizedBox(),
-                                        const SizedBox(height: 16),
-                                        Container(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              RichText(
-                                                textAlign: TextAlign.center,
-                                                text: TextSpan(
-                                                  style: const TextStyle(
-                                                    height: 1.8,
-                                                    color: primaryText,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                  children: <TextSpan>[
-                                                    const TextSpan(
-                                                        text:
-                                                            'Argent disponible\n'),
-                                                    TextSpan(
-                                                      text: currencyIntFormat
-                                                          .format(controller
-                                                              .offer!["price"]),
-                                                      style: const TextStyle(
-                                                        color: primaryText,
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
-                                              RichText(
-                                                textAlign: TextAlign.center,
-                                                text: TextSpan(
-                                                  style: const TextStyle(
-                                                    height: 1.8,
-                                                    color: primaryText,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
                                                   ),
-                                                  children: <TextSpan>[
-                                                    const TextSpan(
-                                                        text:
-                                                            'Cagnotte minimum\n'),
-                                                    TextSpan(
-                                                      text: currencyIntFormat
-                                                          .format(controller
-                                                              .pool
-                                                              .value), // TODO: change for wallet
-                                                      style: const TextStyle(
-                                                        color: primaryTitle,
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
+                                                ],
                                               ),
-                                            ],
+                                            ),
+                                            RichText(
+                                              textAlign: TextAlign.center,
+                                              text: TextSpan(
+                                                style: const TextStyle(
+                                                  height: 1.8,
+                                                  color: primaryText,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: controller
+                                                              .isPurchasingOffer
+                                                          ? 'Argent restant\n'
+                                                          : 'Cagnotte minimum\n'),
+                                                  TextSpan(
+                                                    text: currencyDigitFormat
+                                                        .format(controller
+                                                            .pool.value),
+                                                    style: const TextStyle(
+                                                      color: primaryTitle,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      if (controller.isPurchasingOffer &&
+                                          !controller.isOfferPurchased)
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                ),
+                                                maximumSize: Size.infinite,
+                                                backgroundColor: linkColor,
+                                              ),
+                                              onPressed: () =>
+                                                  controller.confirmPurchase(),
+                                              child: const Text(
+                                                "Valider la transaction",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                    ],
                                   ),
+                                ),
+                                if (!controller.isPurchasingOffer &&
+                                    !controller.isOfferPurchased) ...{
                                   const SizedBox(height: 24),
                                   SizedBox(
                                     width: double.infinity,
@@ -205,9 +235,9 @@ class PartnerView extends StatelessWidget {
                                         backgroundColor: linkColor,
                                       ),
                                       onPressed: () =>
-                                          Get.toNamed('/cagnotte/add'),
+                                          controller.toggleIsPurchasingOffer(),
                                       child: const Text(
-                                        "Cagnotter une cigarette",
+                                        "Utiliser ma cagnotte chez le partenaire",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -231,9 +261,100 @@ class PartnerView extends StatelessWidget {
                                           style: TextStyle(color: linkColor),
                                         )),
                                   ),
-                                ],
-                              ),
-                            )),
+                                } else if (controller.isOfferPurchased) ...{
+                                  const SizedBox(height: 24),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: const Text(
+                                        "Votre code de réduction :",
+                                        style: TextStyle(
+                                            color: primaryText,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: primaryTitle, width: 1),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                color: Color.fromRGBO(
+                                                    198, 218, 191, 0.3),
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(8),
+                                                    bottomLeft:
+                                                        Radius.circular(8)),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 4.0),
+                                                child: Text(
+                                                    controller.offer["code"],
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                      color: primaryTitle,
+                                                      fontSize: 32,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    )),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Clipboard.setData(ClipboardData(
+                                                    text: controller
+                                                        .offer["code"]));
+                                                Get.snackbar(
+                                                  "Code copié",
+                                                  "Le code a été copié dans le presse-papier",
+                                                  snackPosition:
+                                                      SnackPosition.BOTTOM,
+                                                  backgroundColor: primaryTitle,
+                                                  colorText: Colors.white,
+                                                );
+                                              },
+                                              child: const Column(
+                                                children: [
+                                                  Icon(Icons.copy, size: 16),
+                                                  Text(
+                                                    "copier",
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                }
+                              ],
+                            ),
+                          ),
+                        ),
                       ]),
                 ),
               ),
