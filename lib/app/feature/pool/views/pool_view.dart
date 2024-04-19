@@ -61,7 +61,8 @@ class PoolView extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 16),
                                     child: Text(
-                                      currencyFormat.format(controller.pool),
+                                      currencyDigitFormat
+                                          .format(controller.pool),
                                       style: const TextStyle(
                                         color: primaryText,
                                         fontSize: 40,

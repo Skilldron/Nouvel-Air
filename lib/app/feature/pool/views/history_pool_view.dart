@@ -50,13 +50,13 @@ class HistoryPoolView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                          "${item['type']}${currencyFormat.format(item['amount'])}",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: item['type'] == "+"
-                                  ? primaryTitle
-                                  : linkColor)),
+                        "${item['type']}${currencyDigitFormat.format(item['amount'])}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color:
+                                item['type'] == "+" ? primaryTitle : linkColor),
+                      ),
                     ],
                   ),
                 ),

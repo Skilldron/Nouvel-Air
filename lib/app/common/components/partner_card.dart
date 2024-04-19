@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 enum HeigthSize { small, medium }
 
@@ -6,17 +7,19 @@ class PartnerCard extends StatelessWidget {
   final HeigthSize heightSize;
   final String title;
   final String imageURI;
+  final String id;
 
   const PartnerCard(
       {super.key,
       required this.heightSize,
       required this.title,
-      required this.imageURI});
+      required this.imageURI,
+      required this.id});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print('tapped'), // TODO: rediriger vers la bonne page
+      onTap: () => Get.toNamed('/partner', arguments: {'id': id}),
       child: Container(
         width: double.infinity,
         height: heightSize == HeigthSize.small ? 64 : 95,

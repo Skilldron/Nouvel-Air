@@ -7,6 +7,7 @@ import 'package:nouvel_air/app/feature/navigation/navigation_binding.dart';
 import 'package:nouvel_air/app/feature/navigation/views/navigation_view.dart';
 import 'package:nouvel_air/app/feature/partner_offers/partner_offers_binding.dart';
 import 'package:nouvel_air/app/feature/partner_offers/views/list_offers_view.dart';
+import 'package:nouvel_air/app/feature/partner_offers/views/partner_view.dart';
 import 'package:nouvel_air/app/feature/pool/pool_bindind.dart';
 import 'package:nouvel_air/app/feature/pool/views/credit_pool_view.dart';
 import 'package:nouvel_air/app/feature/pool/views/pool_view.dart';
@@ -38,4 +39,8 @@ final routes = [
       name: '/partner-offers',
       page: () => const ListOffersView(),
       binding: PartnerOffersBinding()),
+  GetPage(
+      name: "/partner",
+      page: () => const PartnerView(),
+      binding: PartnerOffersBinding())
 ];

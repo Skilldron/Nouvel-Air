@@ -14,12 +14,14 @@ class PartnerContentView extends GetView<HomeController> {
     return Wrap(runSpacing: 32, children: [
       if (offers.isNotEmpty)
         PartnerCard(
+          id: offers[0].id,
           heightSize: HeigthSize.small,
           title: offers[0]["title"],
           imageURI: offers[0]["imageURI"],
         ),
       ...offers.skip(1).toList().map((offer) {
         return PartnerCard(
+          id: offer.id,
           heightSize: HeigthSize.medium,
           title: offer["title"],
           imageURI: offer["imageURI"],
