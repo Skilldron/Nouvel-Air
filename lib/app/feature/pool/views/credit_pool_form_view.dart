@@ -130,7 +130,8 @@ class CreditPoolFormView extends StatelessWidget {
                               controller: cigaretteAmountController
                                 ..text = controller.nbCigarret.toString(),
                               onChanged: (value) {
-                                controller.nbCigarret = int.parse(value);
+                                controller.nbCigarret =
+                                    value != '' ? int.parse(value) : 0;
                                 controller.update();
                               },
                               keyboardType: TextInputType.number,
