@@ -5,6 +5,7 @@ import 'package:nouvel_air/app/feature/auth/components/decorations.dart';
 import 'package:nouvel_air/app/common/components/data_index_view.dart';
 import 'package:nouvel_air/app/feature/stats/components/trophee_card.dart';
 import 'package:nouvel_air/app/feature/stats/stats_controller.dart';
+import 'package:nouvel_air/app/feature/stats/views/progress_content.dart';
 import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:nouvel_air/core/utils/font_styles.dart';
 
@@ -164,7 +165,7 @@ class StatsView extends StatelessWidget {
                               child: Container(
                                   margin: const EdgeInsets.symmetric(
                                       vertical: 16, horizontal: 8),
-                                  child: const Text("SUUUUUUUUUU"))),
+                                  child: const ProgressContent())),
                         )),
                         const SizedBox(height: 48),
                       ])))));

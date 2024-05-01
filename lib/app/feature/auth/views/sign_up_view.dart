@@ -7,9 +7,9 @@ import 'package:nouvel_air/core/utils/colors.dart';
 import 'package:nouvel_air/core/utils/font_styles.dart';
 
 class RegisterView extends GetView<AuthController> {
-    const RegisterView({Key? key}) : super(key: key);
+  const RegisterView({Key? key}) : super(key: key);
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primary,
@@ -22,18 +22,21 @@ class RegisterView extends GetView<AuthController> {
       ),
       body: Container(
         decoration: authBackground,
-        child: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            margin: const EdgeInsetsDirectional.only(top: 34),
-            child:
-              Column(
+        height: Get.height,
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              margin: const EdgeInsetsDirectional.only(top: 34),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Créer un compte', style: h1Style),
-                    AuthForm(function: controller.register, title: 'Créer un compte'),
-                  ],
-                ),
+                children: [
+                  const Text('Créer un compte', style: h1Style),
+                  AuthForm(
+                      function: controller.register, title: 'Créer un compte'),
+                ],
+              ),
+            ),
           ),
         ),
       ),

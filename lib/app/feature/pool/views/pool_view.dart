@@ -128,7 +128,8 @@ class PoolView extends StatelessWidget {
                                       maximumSize: Size.infinite,
                                       backgroundColor: Colors.white,
                                     ),
-                                    onPressed: () => Get.toNamed('/cagnotte'),
+                                    onPressed: () =>
+                                        Get.toNamed('/partner-offers'),
                                     child: const Text(
                                       "Utiliser la cagnotte",
                                       style: TextStyle(color: linkColor),
