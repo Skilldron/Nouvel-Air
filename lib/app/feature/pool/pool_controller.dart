@@ -12,6 +12,9 @@ class PoolController extends GetxController {
   double get pool => _pool.value;
   // History field which is a list of object with amount and date
   var history = <Map<String, dynamic>>[].obs;
+  bool addQuantityByCigarette = false;
+  double cigarettePrice = 1.7;
+  int nbCigarret = 0;
 
   @override
   void onInit() {
@@ -116,4 +119,11 @@ class PoolController extends GetxController {
 
   //Getter history
   List get getHistory => history.toList();
+
+  double calculateAmount() {
+    if (addQuantityByCigarette) {
+      return cigarettePrice * nbCigarret;
+    }
+    return 0.0;
+  }
 }
