@@ -57,15 +57,17 @@ class OverviewContentView extends GetView<HomeController> {
             children: [
               DataIndexView(
                 title: "Euros économisés",
-                data: controller.isLoading.value ? 130 : 130,
+                data: controller.isLoading.value ? 0 : controller.euroSave,
               ),
               DataIndexView(
                 title: "Cigarettes évitées",
-                data: controller.isLoading.value ? 130 : 130,
+                data:
+                    controller.isLoading.value ? 0 : controller.cigaretteEscape,
               ),
               DataIndexView(
                 title: "Euros remportés",
-                data: controller.isLoading.value ? 130 : 130,
+                data:
+                    controller.isLoading.value ? 130 : controller.cashbackEarn,
               ),
             ],
           ),

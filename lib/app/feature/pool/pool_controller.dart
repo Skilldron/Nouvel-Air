@@ -56,6 +56,15 @@ class PoolController extends GetxController {
       var historyData = await historyDoc.get();
 
       history.value = historyData.docs.map((e) {
+        // If cashback is not null, we return the cashback
+        if (e.data()['cashback'] != null) {
+          return {
+            'amount': e.data()['amount'] + e.data()['cashback'],
+            'date': e.data()['date'].toDate(),
+            'type': e.data()['type'] == 'credit' ? "+" : "-"
+          };
+        }
+
         return {
           'amount': e.data()['amount'],
           'date': e.data()['date'].toDate(),
@@ -72,30 +81,36 @@ class PoolController extends GetxController {
   // Function to credit the pool
   Future<void> credit(double amount) async {
     var poolDoc = firestore.collection('pool').doc(user.uid);
+    double cashback = amount * 0.05;
 
     try {
       if (!(await poolDoc.get()).exists) {
-        await poolDoc.set({'pool': amount});
+        await poolDoc.set({'pool': amount + cashback});
       } else {
-        poolDoc.update({'pool': FieldValue.increment(amount)});
+        poolDoc.update({'pool': FieldValue.increment(amount + cashback)});
       }
 
-      _pool.value += amount;
+      _pool.value += amount + cashback;
     } catch (e) {
       rethrow;
     }
 
-    await addHistory(amount, 'credit');
+    await addHistory(amount, cashback, 'credit');
     await fetchHistory();
     update();
   }
 
   // Function to add history
-  Future<void> addHistory(double amount, String typeTransaction) async {
+  Future<void> addHistory(
+      double amount, double cashback, String typeTransaction) async {
     var historyDoc =
         firestore.collection('pool').doc(user.uid).collection('history').doc();
-    await historyDoc.set(
-        {'amount': amount, 'date': DateTime.now(), 'type': typeTransaction});
+    await historyDoc.set({
+      'amount': amount,
+      'cashback': cashback,
+      'date': DateTime.now(),
+      'type': typeTransaction
+    });
   }
 
   void debit(double amount, String typeTransaction) async {
@@ -113,7 +128,7 @@ class PoolController extends GetxController {
       rethrow;
     }
     await fetchHistory();
-    await addHistory(amount, typeTransaction);
+    await addHistory(amount, 0, typeTransaction);
     update();
   }
 

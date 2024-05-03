@@ -11,6 +11,9 @@ class HomeController extends GetxController {
   User user = AuthController.instance.user!;
   var userName = "".obs;
   final offers = [].obs;
+  int euroSave = 0;
+  int cigaretteEscape = 0;
+  int cashbackEarn = 0;
 
   @override
   Future<void> onInit() async {
@@ -18,6 +21,10 @@ class HomeController extends GetxController {
     userName.value = auth.currentUser?.displayName ?? "";
     getDays();
     await getThreeOffers();
+    await saveEuro();
+    cigaretteEscape = getCigaretteEscape();
+    cashbackEarn = await getCashbackEarn();
+    update();
   }
 
   Future<void> getDays() async {
@@ -25,7 +32,6 @@ class HomeController extends GetxController {
     var userDoc = await firestore.collection('users').doc(user.uid).get();
     var createdAt = userDoc.data()!['createdAt'];
 
-    // TODO: Enhanced the code. It's du to the fact that the createdAt field is not yet initialized in the database when initializing the HomeController after the signup
     if (createdAt != null) {
       createdAt = createdAt.toDate();
       // Get current date
@@ -45,6 +51,39 @@ class HomeController extends GetxController {
         .limit(3)
         .get()
         .then((value) => value.docs);
+  }
+
+  Future<void> saveEuro() async {
+    var historyDoc =
+        firestore.collection('pool').doc(user.uid).collection('history');
+    // get the somme of all the amount in the history which are credits
+    var historyData = await historyDoc
+        .where('type', isEqualTo: 'credit')
+        .aggregate(sum('amount'))
+        .get();
+
+    euroSave = historyData.getSum('amount') == null
+        ? 0
+        : historyData.getSum('amount')!.toInt();
+
     update();
+  }
+
+  int getCigaretteEscape() {
+    return euroSave ~/ 1.7;
+  }
+
+  Future<int> getCashbackEarn() async {
+    var historyDoc =
+        firestore.collection('pool').doc(user.uid).collection('history');
+    // get the somme of all the amount in the history which are credits
+    var amountCashback = await historyDoc
+        .where('type', isEqualTo: 'credit')
+        .aggregate(sum('cashback'))
+        .get();
+
+    return amountCashback.getSum('cashback') == null
+        ? 0
+        : amountCashback.getSum('cashback')!.toInt();
   }
 }

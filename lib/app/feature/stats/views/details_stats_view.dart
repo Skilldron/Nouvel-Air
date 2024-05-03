@@ -128,9 +128,34 @@ class DetailsStatsView extends StatelessWidget {
                                         runSpacing: 8,
                                         children: [
                                           TropheeCardView(
-                                            title: "Investisseur",
+                                            title: "Trophée mystère 1",
                                             imageURI:
-                                                'assets/images/trophe1.png',
+                                                'assets/images/trophee_not_acquired.png',
+                                          ),
+                                          TropheeCardView(
+                                            title: "Trophée mystère 2",
+                                            imageURI:
+                                                'assets/images/trophee_not_acquired.png',
+                                          ),
+                                          TropheeCardView(
+                                            title: "Trophée mystère 3",
+                                            imageURI:
+                                                'assets/images/trophee_not_acquired.png',
+                                          ),
+                                          TropheeCardView(
+                                            title: "Trophée mystère 4",
+                                            imageURI:
+                                                'assets/images/trophee_not_acquired.png',
+                                          ),
+                                          TropheeCardView(
+                                            title: "Trophée mystère 5",
+                                            imageURI:
+                                                'assets/images/trophee_not_acquired.png',
+                                          ),
+                                          TropheeCardView(
+                                            title: "Trophée mystère 6",
+                                            imageURI:
+                                                'assets/images/trophee_not_acquired.png',
                                           ),
                                         ],
                                       ),
