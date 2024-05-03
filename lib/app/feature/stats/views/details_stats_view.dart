@@ -70,17 +70,83 @@ class DetailsStatsView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    const SizedBox(
+                                    SizedBox(
                                       width: double.infinity,
                                       child: Wrap(
                                         spacing: 8,
                                         runSpacing: 8,
                                         children: [
-                                          TropheeCardView(
-                                            title: "Investisseur",
-                                            imageURI:
-                                                'assets/images/trophe1.png',
-                                          ),
+                                          if (controller.tropheesEarned.isEmpty)
+                                            const Text(
+                                              "Aucun trophée emporté",
+                                              style: TextStyle(
+                                                  color: primaryText,
+                                                  fontSize: 16),
+                                            )
+                                          else
+                                            ...(controller.tropheesEarned
+                                                .map(
+                                                  (trophy) => GestureDetector(
+                                                    onTap: () => showDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            AlertDialog(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                content:
+                                                                    Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              18.0),
+                                                                  child:
+                                                                      ConstrainedBox(
+                                                                    constraints:
+                                                                        const BoxConstraints(
+                                                                            maxHeight:
+                                                                                250),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Image
+                                                                            .network(
+                                                                          trophy[
+                                                                              'iconURI'],
+                                                                          height:
+                                                                              100,
+                                                                          width:
+                                                                              100,
+                                                                        ),
+                                                                        Wrap(
+                                                                          alignment:
+                                                                              WrapAlignment.center,
+                                                                          runSpacing:
+                                                                              8,
+                                                                          spacing:
+                                                                              8,
+                                                                          children: [
+                                                                            Text(trophy['title'],
+                                                                                style: const TextStyle(color: primaryText, fontSize: 16, fontWeight: FontWeight.bold)),
+                                                                            Text(
+                                                                              trophy['description'],
+                                                                              style: const TextStyle(color: primaryText, fontSize: 16),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ))),
+                                                    child: TropheeCardView(
+                                                        title: trophy['title'],
+                                                        isEarned: true,
+                                                        imageURI:
+                                                            trophy['iconURI']),
+                                                  ),
+                                                )
+                                                .toList()),
                                         ],
                                       ),
                                     ),

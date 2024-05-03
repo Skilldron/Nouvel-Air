@@ -121,17 +121,32 @@ class StatsView extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        const SizedBox(
+                                        SizedBox(
                                           width: double.infinity,
                                           child: Wrap(
                                             spacing: 8,
                                             runSpacing: 8,
                                             children: [
-                                              TropheeCardView(
-                                                title: "Investisseur",
-                                                imageURI:
-                                                    'assets/images/trophe1.png',
-                                              ),
+                                              if (controller
+                                                  .tropheesEarned.isEmpty)
+                                                const Text(
+                                                  "Aucun trophée emporté",
+                                                  style: TextStyle(
+                                                      color: primaryText,
+                                                      fontSize: 16),
+                                                )
+                                              else
+                                                ...(controller.tropheesEarned
+                                                    .map(
+                                                      (trophy) =>
+                                                          TropheeCardView(
+                                                              title: trophy[
+                                                                  'title'],
+                                                              isEarned: true,
+                                                              imageURI: trophy[
+                                                                  'iconURI']),
+                                                    )
+                                                    .toList()),
                                             ],
                                           ),
                                         ),

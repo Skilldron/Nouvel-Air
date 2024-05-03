@@ -9,6 +9,7 @@ class TropheeCardView extends GetView<HomeController> {
   final String imageURI;
   final double width;
   final double minHeight;
+  final bool isEarned;
 
   const TropheeCardView({
     Key? key,
@@ -16,6 +17,7 @@ class TropheeCardView extends GetView<HomeController> {
     required this.imageURI,
     this.width = 100,
     this.minHeight = 40,
+    this.isEarned = false,
   }) : super(key: key);
 
   @override
@@ -37,12 +39,17 @@ class TropheeCardView extends GetView<HomeController> {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  child: Image.asset(
-                    // TODO: Modifier cela pour que ce repris de la base de donnée firebase
-                    imageURI,
-                    width: 55,
-                    height: 55,
-                  ),
+                  child: isEarned
+                      ? Image.network(
+                          imageURI,
+                          width: 55,
+                          height: 55,
+                        )
+                      : Image.asset(
+                          imageURI,
+                          width: 55,
+                          height: 55,
+                        ),
                 ),
                 Text(
                   title,
